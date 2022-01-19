@@ -65,8 +65,14 @@ class Board
         const index = cell.dataset.index;
         const row = cell.dataset.row;
         const column = cell.dataset.column;
+        const diagonal = cell.dataset.diagonal;
         return this.checkBlockMatch(player, this.locationMap['row'][row]) 
-            || this.checkBlockMatch(player, this.locationMap['column'][column]);
+            || this.checkBlockMatch(player, this.locationMap['column'][column])
+            || (diagonal && (
+                this.checkBlockMatch(player, this.locationMap['diagonal'][this.DIAGONAL_LEFT].concat(this.locationMap['diagonal'][this.DIAGONAL_BOTH]))
+                || this.checkBlockMatch(player, this.locationMap['diagonal'][this.DIAGONAL_RIGHT].concat(this.locationMap['diagonal'][this.DIAGONAL_BOTH])))
+            )
+        ;
     }
 
     checkBlockMatch(value, indices) {
